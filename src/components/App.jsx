@@ -7,12 +7,12 @@ import  Modal  from './Modal/Modal';
 
 export class App extends Component {
   state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-    visible: false,
-    showModal: false,
+    imageName: '',
   };
+
+  handleFormSubmit = imageName => {
+    this.setState({imageName})
+  }
 
   toggleModal = () => {
     this.setState(({showModal})=> ({
@@ -24,9 +24,9 @@ export class App extends Component {
     const { showModal } = this.state
     return (
       <>
-        <Searchbar />
-        <ImageGallery />
-        <button type='button' onClick={this.toggleModal}>Open</button>
+        <Searchbar onSubmit={this.handleFormSubmit}/>
+        <ImageGallery imageName={this.state.imageName}/>
+        {/* <button type='button' onClick={this.toggleModal}>Open</button> */}
         {showModal && <Modal onClose={this.toggleModal}><h1>Hay</h1></Modal>}
         {/* {showModal && <Modal />} */}
       </>

@@ -1,9 +1,10 @@
 // import PropTypes from 'prop-types';
 import css from './ImageGalleryItem.module.css';
 
-export const ImageGalleryItem = () => {
+export const ImageGalleryItem = ({ imageName }) => {
   return (
     <>
+      {imageName}
       <li className={css.galleryItem}>
         <img className={css.galleryImage} src="" alt="" />
       </li>
