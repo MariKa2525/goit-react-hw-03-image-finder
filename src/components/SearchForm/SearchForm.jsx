@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import css from './SearchForm.module.css';
-// import { ImSeach } from 'react-icons/im';
-// import PropTypes from 'prop-types';
+import  toast from 'react-hot-toast';
+import PropTypes from 'prop-types';
+import { ReactComponent as AddIcon } from '../../icons/search.svg';
+
 
 export default class SearchForm extends Component {
   state = {
@@ -15,7 +17,7 @@ export default class SearchForm extends Component {
   handleSubmit = evt => {
     evt.preventDefault()
     if(this.state.imageName.trim() === '') {
-      return
+      toast.error('Please enter seach image title')
     }
     this.props.onSubmit(this.state.imageName)
     this.setState({ imageName: '' });
@@ -25,7 +27,7 @@ export default class SearchForm extends Component {
     return (
       <form className={css.searchForm} onSubmit={this.handleSubmit}>
         <button type="submit" className={css.searchFormButton}>
-          <span className={css.searchFormButtonLabel}>Search</span>
+          <span className={css.searchFormButtonLabel}><AddIcon /></span>
         </button>
         <input
           className={css.searchFormInput}
@@ -42,6 +44,6 @@ export default class SearchForm extends Component {
   }
 }
 
-// Searchbar.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };
+SearchForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

@@ -1,20 +1,18 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import css from './ImageGalleryItem.module.css';
 
-export const ImageGalleryItem = ({ imageName }) => {
+export const ImageGalleryItem = ({ src, alt, largeImageURL, showLargeImage }) => {
   return (
-    <>
-      {imageName}
-      <li className={css.galleryItem}>
-        <img className={css.galleryImage} src="" alt="" />
-      </li>
-    </>
+    <li className={css.galleryItem} onClick={() => showLargeImage(largeImageURL)}>
+      <img className={css.galleryImage} src={src} alt={alt} />
+    </li>
   );
 };
 
-// Contact.propTypes = {
-//   id: PropTypes.string.isRequired,
-//   name: PropTypes.string.isRequired,
-//   number: PropTypes.string.isRequired,
-//   deleteContact: PropTypes.func.isRequired,
-// };
+ImageGalleryItem.propTypes = {
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  showLargeImage: PropTypes.func.isRequired,
+  largeImageURL: PropTypes.string.isRequired,
+
+};
