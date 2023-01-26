@@ -84,7 +84,7 @@ export class App extends Component {
         {images.length && (
           <ImageGallery images={images} showLargeImage={this.getLargeImage} />
         )}
-        {images.length !== 0 && isLoadMoreBtn === false && (
+        {images.length !== 0 && !isLoadMoreBtn && (
           <Button onLoadMore={this.onLoadMore} />
         )}
         {largeImage && (
