@@ -58,7 +58,7 @@ export class App extends Component {
       page: 1,
       images: [],
       loading: true,
-      isHideBtn: false,
+      isLoadMoreBtn: false,
     });
   };
 
