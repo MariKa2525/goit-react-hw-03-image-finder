@@ -23,9 +23,6 @@ export class App extends Component {
     if (prevState.imageName !== imageName || prevState.page !== page) {
       this.getFethImage();
     }
-    // if (prevState.imageName !== imageName && imageName !== '') {
-    //   this.setState({ page: 1, images: [], loading: true, isHideBtn: false });
-    // }
   }
 
   getFethImage = () => {
@@ -39,7 +36,6 @@ export class App extends Component {
         return Promise.reject(new Error('Sorry no image'));
       })
       .then(images => {
-        // console.log(images)
         if (images.hits.length === 0) {
           toast.error('Sorry, there are no images matching your search query');
         }
@@ -57,7 +53,13 @@ export class App extends Component {
   };
 
   handleFormSubmit = imageName => {
-    this.setState({ imageName, page: 1, images: [], loading: true, isHideBtn: false });
+    this.setState({
+      imageName,
+      page: 1,
+      images: [],
+      loading: true,
+      isHideBtn: false,
+    });
   };
 
   toggleModal = () => {
@@ -82,7 +84,9 @@ export class App extends Component {
         {images.length && (
           <ImageGallery images={images} showLargeImage={this.getLargeImage} />
         )}
-        {images.length !== 0 && isLoadMoreBtn === false  && <Button onLoadMore={this.onLoadMore} />}
+        {images.length !== 0 && isLoadMoreBtn === false && (
+          <Button onLoadMore={this.onLoadMore} />
+        )}
         {largeImage && (
           <Modal onClose={this.toggleModal} src={largeImage} images={images} />
         )}
