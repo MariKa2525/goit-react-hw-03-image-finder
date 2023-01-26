@@ -27,7 +27,7 @@ export class App extends Component {
 
   getFethImage = () => {
     const { imageName, page } = this.state;
-
+    this.setState({ loading: true });
     getImage(imageName, page)
       .then(res => {
         if (res.ok) {
@@ -57,7 +57,6 @@ export class App extends Component {
       imageName,
       page: 1,
       images: [],
-      loading: true,
       isLoadMoreBtn: false,
     });
   };
@@ -81,7 +80,7 @@ export class App extends Component {
         <Toaster position="top-right" toastOptions={{ duration: 1500 }} />
         <Searchbar onSubmit={this.handleFormSubmit} />
         {loading && <Loader />}
-        {images.length && (
+        {images.length > 0 && (
           <ImageGallery images={images} showLargeImage={this.getLargeImage} />
         )}
         {images.length !== 0 && !isLoadMoreBtn && (
