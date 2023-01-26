@@ -5,10 +5,10 @@ import css from './ImageGallery.module.css';
 export const ImageGallery = ({ images, showLargeImage }) => {
   return (
     <ul className={css.imageGallery}>
-      {images.map((image, index)  => {
+      {images.map((image)  => {
         return (
               <ImageGalleryItem
-              key={index}
+              key={image.id}
               src={image.webformatURL}
               alt={image.tags}
               largeImageURL={image.largeImageURL}

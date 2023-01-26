@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import Modal from './Modal/Modal';
-import { getImage } from './services/getImage';
+import { getImage } from '../services/getImage';
 import toast, { Toaster } from 'react-hot-toast';
 import { Loader } from './Loader/Loader';
 import { Button } from './Button/Button';
@@ -14,7 +14,7 @@ export class App extends Component {
     largeImage: '',
     loading: false,
     page: 1,
-    isHideBtn: false,
+    isLoadMoreBtn: false,
     showModal: false,
   };
 
@@ -23,9 +23,9 @@ export class App extends Component {
     if (prevState.imageName !== imageName || prevState.page !== page) {
       this.getFethImage();
     }
-    if (prevState.imageName !== imageName && imageName !== '') {
-      this.setState({ page: 1, images: [], loading: true, isHideBtn: false });
-    }
+    // if (prevState.imageName !== imageName && imageName !== '') {
+    //   this.setState({ page: 1, images: [], loading: true, isHideBtn: false });
+    // }
   }
 
   getFethImage = () => {
@@ -39,11 +39,12 @@ export class App extends Component {
         return Promise.reject(new Error('Sorry no image'));
       })
       .then(images => {
+        // console.log(images)
         if (images.hits.length === 0) {
           toast.error('Sorry, there are no images matching your search query');
         }
         if (images.hits.length < 12) {
-          this.setState({ isHideBtn: true });
+          this.setState({ isLoadMoreBtn: true });
         }
         this.setState(prev => ({
           images: [...prev.images, ...images.hits],
@@ -56,7 +57,7 @@ export class App extends Component {
   };
 
   handleFormSubmit = imageName => {
-    this.setState({ imageName });
+    this.setState({ imageName, page: 1, images: [], loading: true, isHideBtn: false });
   };
 
   toggleModal = () => {
@@ -72,17 +73,16 @@ export class App extends Component {
   };
 
   render() {
-    const { loading, images, largeImage } = this.state;
-    // console.log(images)
+    const { loading, images, largeImage, isLoadMoreBtn } = this.state;
     return (
       <>
-        {loading && <Loader />}
         <Toaster position="top-right" toastOptions={{ duration: 1500 }} />
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {images && (
+        {loading && <Loader />}
+        {images.length && (
           <ImageGallery images={images} showLargeImage={this.getLargeImage} />
         )}
-        {images.length !== 0 && <Button onLoadMore={this.onLoadMore} />}
+        {images.length !== 0 && isLoadMoreBtn === false  && <Button onLoadMore={this.onLoadMore} />}
         {largeImage && (
           <Modal onClose={this.toggleModal} src={largeImage} images={images} />
         )}
